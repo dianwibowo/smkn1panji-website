@@ -36,12 +36,11 @@ const navItems = [
   },
   { label: 'Berita', href: '/berita' },
   { label: 'Kontak', href: '/kontak' },
-  { label: 'Kelulusan', href: '/kelulusan' },
 ]
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -61,39 +60,41 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop menu */}
+          {/* Desktop menu — pakai CSS group hover, tanpa JS state */}
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
-              <div
-                key={item.href}
-                className="relative"
-                onMouseEnter={() => item.children && setOpenDropdown(item.label)}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
+              <div key={item.href} className="relative group">
+
                 <Link
                   href={item.href}
                   className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
                 >
                   {item.label}
                   {item.children && (
-                    <svg className="w-3 h-3 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3 h-3 mt-0.5 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   )}
                 </Link>
 
-                {/* Dropdown */}
-                {item.children && openDropdown === item.label && (
-                  <div className="absolute top-full left-0 mt-1 w-72 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
+                {/* Dropdown — muncul saat group di-hover */}
+                {item.children && (
+                  <div className="absolute top-full left-0 w-72 z-50
+                                  opacity-0 invisible translate-y-1
+                                  group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+                                  transition-all duration-150 ease-out
+                                  pt-2">
+                    <div className="bg-white rounded-lg shadow-lg border border-gray-100 py-1">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -121,14 +122,26 @@ export default function Navbar() {
         <div className="lg:hidden border-t border-gray-100 bg-white">
           {navItems.map((item) => (
             <div key={item.href}>
-              <Link
-                href={item.href}
-                className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 border-b border-gray-50"
-                onClick={() => setMobileOpen(false)}
-              >
-                {item.label}
-              </Link>
-              {item.children && (
+              <div className="flex items-center justify-between border-b border-gray-50">
+                <Link
+                  href={item.href}
+                  className="flex-1 block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {item.label}
+                </Link>
+                {item.children && (
+                  <button
+                    className="px-4 py-3 text-gray-400"
+                    onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
+                  >
+                    <svg className={`w-4 h-4 transition-transform ${mobileExpanded === item.label ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+              {item.children && mobileExpanded === item.label && (
                 <div className="bg-gray-50">
                   {item.children.map((child) => (
                     <Link

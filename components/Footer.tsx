@@ -37,7 +37,6 @@ export default function Footer() {
                 { label: 'Visi dan Misi', href: '/profil/visi-misi' },
                 { label: 'Program Keahlian', href: '/program-keahlian' },
                 { label: 'Berita & Kegiatan', href: '/berita' },
-                { label: 'Cek Kelulusan', href: '/kelulusan' },
                 { label: 'Kontak Kami', href: '/kontak' },
               ].map((link) => (
                 <li key={link.href}>
