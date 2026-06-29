@@ -55,7 +55,7 @@ export default function Navbar() {
               className="h-10 w-auto"
             />
             <div className="hidden sm:block">
-              <p className="text-sm font-bold text-blue-900 leading-tight">SMK Negeri 1 Panji</p>
+              <p className="text-sm font-bold text-brand-white leading-tight">SMK Negeri 1 Panji</p>
               <p className="text-xs text-gray-500 leading-tight">Situbondo</p>
             </div>
           </Link>
@@ -67,7 +67,7 @@ export default function Navbar() {
 
                 <Link
                   href={item.href}
-                  className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
+                  className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-brand-white hover:bg-white/5 rounded-md transition-colors"
                 >
                   {item.label}
                   {item.children && (
@@ -89,7 +89,7 @@ export default function Navbar() {
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-white/5 hover:text-brand-white transition-colors"
                         >
                           {child.label}
                         </Link>
@@ -125,7 +125,7 @@ export default function Navbar() {
               <div className="flex items-center justify-between border-b border-gray-50">
                 <Link
                   href={item.href}
-                  className="flex-1 block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700"
+                  className="flex-1 block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-white/5 hover:text-brand-white"
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
@@ -147,7 +147,7 @@ export default function Navbar() {
                     <Link
                       key={child.href}
                       href={child.href}
-                      className="block px-8 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700"
+                      className="block px-8 py-2 text-sm text-gray-600 hover:bg-white/5 hover:text-brand-white"
                       onClick={() => setMobileOpen(false)}
                     >
                       {child.label}
